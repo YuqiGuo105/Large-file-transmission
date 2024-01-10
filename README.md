@@ -8,19 +8,19 @@ network were initially assigned with a Python project basing on knowledge of lec
 
 ### 1.2	Literature review:
 According to rudimentary knowledge about network, there are two fundamental protocols in transport layer ---- UDP and TCP (see figure 1). In contrast to TCP which is reliable, UDP is unreliable data transfer that it may cause data loss, but it has faster and simpler connection. As a result, the student of coding this program choose rdt3.0, which has checksum to avoid loss, as blueprint for this project.
-![img.png](/Users/yuqi.guo/Desktop/Large-file-transmission/Screenshot 2024-01-09 at 23.14.35.png)
+![img.png](Image/Screenshot 2024-01-09 at 23.14.35.png)
 
 ## 2.	Methodology:
 ### 2.1. Proposed ideas and protocols
 As mentioned in previous report, rdt3.0 has been chosen as general structure to design protocol. The whole process that can be divided into following steps (see figure 2):
-![Screenshot 2024-01-09 at 23.16.18.png](Screenshot%202024-01-09%20at%2023.16.18.png)
-![Screenshot 2024-01-09 at 23.16.47.png](Screenshot%202024-01-09%20at%2023.16.47.png)
+![Screenshot 2024-01-09 at 23.16.18.png](Image/Screenshot%202024-01-09%20at%2023.16.18.png)
+![Screenshot 2024-01-09 at 23.16.47.png](Image/Screenshot%202024-01-09%20at%2023.16.47.png)
 
 Yet once the initial version of protocol has completed, although it can realize base transmission, it is so slow that it limits use of physical resource. In order to increase utilization, the student use a pipelined protocol instead of stop-and-wait to operate transmission of large file of UDP segment (see figure 3). Different with stop-and-wait that the server will send only one packet each time, pipelined protocol will send three or more packets each time. Since the average time of each packet of waiting for ACK of pipelined protocol will been shorten, compared with stop-and-wait.
-![Screenshot 2024-01-09 at 23.17.32.png](Screenshot%202024-01-09%20at%2023.17.32.png)
+![Screenshot 2024-01-09 at 23.17.32.png](Image/Screenshot%202024-01-09%20at%2023.17.32.png)
 
 As a result, GBN is selected (optional) which has not finished finally. As show in figure 4, GBN will has 3 part to implement it ----base, window_size and next_seq_num.
-![Screenshot 2024-01-09 at 23.18.12.png](Screenshot%202024-01-09%20at%2023.18.12.png)
+![Screenshot 2024-01-09 at 23.18.12.png](Image/Screenshot%202024-01-09%20at%2023.18.12.png)
 
 Detail implementation of rdt3.0:
 As stated in figure 2 (the FSM of sender for GBN), it will read the file as following sequence(see figure 5):
@@ -28,12 +28,12 @@ As stated in figure 2 (the FSM of sender for GBN), it will read the file as foll
 2.	After sending all packets within window’s size, it will not send any new packet unless receive ACK from receiver (the waiting packet is yellow, which is not ensured about whether receiver has received).
 3.	When receiving ACK, the window will slide the number of ACK received.
 4.	Those process will continue, while the file has been totally read.
-![Screenshot 2024-01-09 at 23.18.54.png](Screenshot%202024-01-09%20at%2023.18.54.png)
-![Screenshot 2024-01-09 at 23.19.09.png](Screenshot%202024-01-09%20at%2023.19.09.png)
-![Screenshot 2024-01-09 at 23.19.35.png](Screenshot%202024-01-09%20at%2023.19.35.png)
+![Screenshot 2024-01-09 at 23.18.54.png](Image/Screenshot%202024-01-09%20at%2023.18.54.png)
+![Screenshot 2024-01-09 at 23.19.09.png](Image/Screenshot%202024-01-09%20at%2023.19.09.png)
+![Screenshot 2024-01-09 at 23.19.35.png](Image/Screenshot%202024-01-09%20at%2023.19.35.png)
 
 ### 2.2. Flow of event:
-![Screenshot 2024-01-09 at 23.22.16.png](Screenshot%202024-01-09%20at%2023.22.16.png)
+![Screenshot 2024-01-09 at 23.22.16.png](Image/Screenshot%202024-01-09%20at%2023.22.16.png)
 ## 3. Implementation:
 For server:
 	The server will online to wait for any request for file, and know the path
